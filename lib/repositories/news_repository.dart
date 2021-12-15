@@ -9,7 +9,6 @@ class NewsRepository {
   Future<NewsList> fetchNews(NewsQuery newsQuery) async {
     final Response response =
         await ApiClient.dio.get("$_trendingTopicsEndpoint${newsQuery.query}");
-    print(response.data);
     return NewsList.fromJson(response.data);
   }
 }

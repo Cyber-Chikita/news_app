@@ -16,13 +16,20 @@ class NewsListLoaded extends NewsListState {
   final int requestDate;
   final List<News> news;
   final bool isNewDataExist;
+  final bool isNextLoading;
 
-  NewsListLoaded(this.requestDate, this.news, {this.isNewDataExist = true});
+  NewsListLoaded(
+    this.requestDate,
+    this.news, {
+    this.isNewDataExist = true,
+    this.isNextLoading = false,
+  });
   @override
   List<Object?> get props => [
         requestDate,
         news,
         isNewDataExist,
+        isNextLoading,
       ];
 }
 

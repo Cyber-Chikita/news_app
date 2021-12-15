@@ -30,9 +30,7 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
       NewsList newsList =
           await _newsRepository.fetchNews(NewsQuery(since: nowDate));
       emit(NewsListLoaded(nowDate, newsList.news));
-    } catch (e, st) {
-      print(e);
-      print(st);
+    } catch (e) {
       emit(NewsListError(ApiClient.handleNetworkError(e)));
     }
   }
@@ -42,7 +40,11 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
     NewsListState previousState = state;
     if (previousState is NewsListLoaded && previousState.isNewDataExist) {
       try {
-        emit(NewsListNextLoading());
+        emit(NewsListLoaded(
+          previousState.requestDate,
+          previousState.news,
+          isNextLoading: true,
+        ));
         NewsList newsList = await _newsRepository.fetchNews(NewsQuery(
           since: previousState.requestDate,
           offset: previousState.news.length,
@@ -55,8 +57,6 @@ class NewsListBloc extends Bloc<NewsListEvent, NewsListState> {
       } catch (e) {
         emit(NewsListError(ApiClient.handleNetworkError(e)));
       }
-    } else {
-      add(UpdateRequested());
     }
   }
 }

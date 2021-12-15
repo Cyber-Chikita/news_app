@@ -108,8 +108,7 @@ class ApiClient {
           errorMsg = "Неизвестная ошибка при получении данных.";
         }
         return errorMsg;
-      } on FormatException catch (e, s) {
-        // Helper.printError(e.toString());
+      } on FormatException {
         return "Неизвестная ошибка при получении данных.";
       } catch (_) {
         return "Неизвестная ошибка при получении данных.";
